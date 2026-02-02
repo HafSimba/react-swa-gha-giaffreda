@@ -1,0 +1,36 @@
+name: CI
+#quando viene eseguita la push sulla branch main
+#oppure quando viene aperta una pull request verso la branch main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+#esegue il job sulla macchina virtuale ubuntu-latest
+jobs:
+  #esegue la build
+  build:
+    runs-on: ubuntu-latest
+
+    #step dell'action nome - azione corrispondente
+    steps:
+    - name: Checkout repository
+      #chekout @v4  per controllare se la versione è aggiornata
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      #setup nodejs versione 24 action@v3
+      uses: actions/setup-node@v3
+      with:
+        node-version: '24'
+    - name: Install dependencies
+      #installa le dipendenze del progetto runnando il comando nel terminale della macchina virtuale
+      run: npm install
+
+    - name: build react app
+      #esegue la build dell'app react da terminale
+      run: npm run build
+
+    - name: Lint React app
+      #esegue il linting dell'app reacr da terminale per verificare la presenza di errori di sintassi
+      run: npm run lint
