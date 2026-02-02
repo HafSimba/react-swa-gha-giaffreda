@@ -1,0 +1,24 @@
+# nome , avvio manuale, 2 jobs: 1) verificare versione node  2) job dipendente dal 1 che installi node al 24 
+
+name: Node c'è?
+env: 
+    NODE_VERSION : 24
+
+on: 
+    workflow_dispatch: 
+
+jobs: 
+    checknodeversion: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: chek versione
+              run: node -pippo 
+
+    ildipendente:
+        needs: checknodeversion
+        runs-on: ubuntu-latest
+        steps:
+            - name : secondo job dipendente
+              uses: actions/setup-node@v4
+              with:  
+                    node-version: ${{ env.NODE_VERSION }}    
